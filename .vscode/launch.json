@@ -5,34 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Attach to Python Functions",
-            "type": "python",
-            "request": "attach",
-            "port": 9091,
-            "preLaunchTask": "func: host start"
-        },
-        {
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "C:\\Code\\CodeSamples\\Python\\AppDev\\myApi.py",
-                "FLASK_ENV": "development",
-                "FLASK_DEBUG": "0"
+                "FLASK_APP": "Python/AppDev/app/myApi.py",
+                "FLASK_DEBUG": "1"
             },
             "args": [
                 "run",
-                "--no-debugger"
+                "--no-debugger",
+                "--no-reload"
             ],
-            "jinja": true
-        }
+            "jinja": true,
+            "justMyCode": true
+        },
+ 
     ]
 }

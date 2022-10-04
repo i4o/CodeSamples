@@ -2,5 +2,17 @@
   {
     "hostname": "SW1",
     "ipaddr": "10.12.12.1"
+  },
+  {
+    "hostname": "router1",
+    "ipaddr": "10.1.1.1"
+  },
+  {
+    "hostname": "router2",
+    "ipaddr": "10.1.1.2"
+  },
+  {
+    "hostname": "r3",
+    "ipaddr": "10.1.1.3"
   }
 ]

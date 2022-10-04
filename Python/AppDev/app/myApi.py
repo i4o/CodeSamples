@@ -12,7 +12,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 logging.basicConfig(filename=f'{script_dir}/filename.log', level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 LOG.info(f"script directory: {script_dir}")
-LOG.info(f"DB file: {script_dir}\db.txt")
+LOG.info(f"DB file: {script_dir}/db.txt")
 
 # Create endpoints
 # http://127.0.0.1:5000/
@@ -20,8 +20,8 @@ LOG.info(f"DB file: {script_dir}\db.txt")
 
 @app.route('/')
 def index():
-    return jsonify({'name': 'knox',
-                    'email': 'knox@knoxsdata.com',
+    return jsonify({'name': 'myApi.py',
+                    'version': '0.0.1',
                     'locale': 'https://youtube.com/c/dataknox'})
 
 # GET http://127.0.0.1:5000/routers?hostname=SW1
@@ -31,7 +31,6 @@ def index():
 def getRouter():
     try:
         hostname = request.args.get('hostname')
-        print(hostname)
         if (hostname is None) or (hostname == ""):
             LOG.warning('No hostname specified')
             raise ValueError
@@ -39,12 +38,16 @@ def getRouter():
             data = f.read()
             records = json.loads(data)
             for record in records:
+                print("Hostname: ", record['hostname'])
                 if record['hostname'] == hostname:
                     LOG.info('Routers returned')
                     return jsonify(record), 200
                 if record['hostname'] != hostname:
-                    LOG.warning('No matching router')
-                    return jsonify({"response": "No match"}), 200
+                    print(hostname)
+                    continue    
+                    
+            LOG.warning('No matching router')
+            return jsonify({"response": "No match"}), 200
     except ValueError:
         LOG.error("NO HOSTNAME SPECIFIED")
         return jsonify({"error": "NO_HOSTNAME_SPECIFIED"}), 400
