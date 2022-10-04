@@ -9,7 +9,7 @@ LOG = create_logger(app)
 
 # Set up application and dynamically determine the path that this script is running in
 script_dir = os.path.dirname(os.path.realpath(__file__))
-logging.basicConfig(filename=f'{script_dir}\\filename.log', level=logging.DEBUG,
+logging.basicConfig(filename=f'{script_dir}/filename.log', level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 LOG.info(f"script directory: {script_dir}")
 LOG.info(f"DB file: {script_dir}\db.txt")
@@ -35,7 +35,7 @@ def getRouter():
         if (hostname is None) or (hostname == ""):
             LOG.warning('No hostname specified')
             raise ValueError
-        with open(f'{script_dir}\\db.txt', 'r') as f:
+        with open(f'{script_dir}/db.txt', 'r') as f:
             data = f.read()
             records = json.loads(data)
             for record in records:
@@ -60,7 +60,7 @@ def addRouter():
     try:
         record = json.loads(request.data)
         LOG.info(f'inbound record {record}')
-        with open(f'{script_dir}\\db.txt', 'r') as f:
+        with open(f'{script_dir}/db.txt', 'r') as f:
             data = f.read()
             records = json.loads(data)
         if record in records:
@@ -69,7 +69,7 @@ def addRouter():
             records.append(record)
             LOG.info(f"records output {records}")
             LOG.warning(f'router added {record["hostname"]}')
-        with open(f'{script_dir}\\db.txt', 'w') as f:
+        with open(f'{script_dir}/db.txt', 'w') as f:
             f.write(json.dumps(records, indent=2))
         return jsonify(record), 201
     except Exception as err:
@@ -84,7 +84,7 @@ def deleteRouter():
     try:
         record = json.loads(request.data)
         new_records = []
-        with open(f'{script_dir}\\db.txt', 'r') as f:
+        with open(f'{script_dir}/db.txt', 'r') as f:
             data = f.read()
             records = json.loads(data)
             for r in records:
@@ -92,7 +92,7 @@ def deleteRouter():
                     LOG.warning(f'Deleted {r["hostname"]}')
                     continue
                 new_records.append(r)
-        with open(f'{script_dir}\\db.txt', 'w') as f:
+        with open(f'{script_dir}/db.txt', 'w') as f:
             f.write(json.dumps(new_records, indent=2))
         return jsonify(record), 204
     except Exception as err:
